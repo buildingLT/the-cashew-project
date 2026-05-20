@@ -34,6 +34,7 @@ function doPost(e) {
 
     // 3. Sanitize inputs ---------------------------------------
     const email = sanitize(data.email || '');
+    const phone = sanitize(data.phone || '');
     const q1    = sanitize(data.q1    || '');
     const q2    = sanitize(data.q2    || '');
     const q3    = sanitize(data.q3    || '');
@@ -62,10 +63,10 @@ function doPost(e) {
 
     const timestamp = new Date().toISOString();
 
-    sheet.appendRow([timestamp, email, q1, q2, q3, q4]);
+    sheet.appendRow([timestamp, email, phone, q1, q2, q3, q4]);
 
     // 7. Email notification ------------------------------------
-    sendNotification(timestamp, email, q1, q2, q3, q4);
+    sendNotification(timestamp, email, phone, q1, q2, q3, q4);
 
     return jsonResponse({ success: true });
 
@@ -128,13 +129,14 @@ function checkRateLimit(ip) {
 //  EMAIL NOTIFICATION
 // ============================================================
 
-function sendNotification(timestamp, email, q1, q2, q3, q4) {
+function sendNotification(timestamp, email, phone, q1, q2, q3, q4) {
   try {
     const subject = '🥜 New Cashew Project Survey Response';
     const body = [
       'New survey response received!\n',
       'Timestamp:           ' + timestamp,
-      'Email:               ' + email,
+      'Email:               ' + (email || '—'),
+      'Phone:               ' + (phone || '—'),
       'Purchase Channel:    ' + q1,
       'Biggest Frustration: ' + q2,
       'Purchase Driver:     ' + q3,
