@@ -12,6 +12,12 @@ const MAX_PER_HOUR = 5;
 // ============================================================
 //  MAIN ENTRY POINT
 // ============================================================
+function doGet() {
+  return ContentService
+    .createTextOutput('The Cashew Project survey endpoint is live. Submissions accepted via POST only.')
+    .setMimeType(ContentService.MimeType.TEXT);
+}
+
 function doPost(e) {
   try {
     // 1. Parse the body ----------------------------------------
