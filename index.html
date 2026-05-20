@@ -15,392 +15,335 @@
     --cream-dim: #C9C3B6;
     --accent: #C99A57;
     --accent-soft: #8C6B3D;
-    --line: rgba(242, 237, 227, 0.10);
-    --line-strong: rgba(242, 237, 227, 0.22);
-    --serif: 'Fraunces', 'Times New Roman', serif;
-    --sans: 'Inter Tight', system-ui, sans-serif;
-    --mono: 'JetBrains Mono', monospace;
+    --line: rgba(242,237,227,0.1);
+    --line-strong: rgba(242,237,227,0.22);
+    --serif: 'Fraunces','Times New Roman',serif;
+    --sans: 'Inter Tight',system-ui,sans-serif;
+    --mono: 'JetBrains Mono',monospace;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  *{box-sizing:border-box;margin:0;padding:0;}
 
-  html, body {
-    height: 100%;
-    background: var(--bg);
-    color: var(--cream);
-    font-family: var(--sans);
-    font-weight: 300;
-    -webkit-font-smoothing: antialiased;
-    overflow: hidden;
-  }
-
-  body::before {
-    content: "";
-    position: fixed; inset: 0;
-    pointer-events: none;
-    z-index: 100;
-    opacity: 0.05;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  html,body{
+    height:100%;
+    background:var(--bg);
+    color:var(--cream);
+    font-family:var(--sans);
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
   }
 
-  /* ── Top bar ── */
-  .topbar {
-    position: fixed; top: 0; left: 0; right: 0;
-    padding: 18px 36px;
-    display: flex; justify-content: space-between; align-items: center;
-    z-index: 50;
-    font-family: var(--mono);
-    font-size: 9.5px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: rgba(242,237,227,0.4);
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:100;
+    opacity:0.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   }
-  .brand {
-    display: flex; align-items: center; gap: 9px;
-    color: rgba(242,237,227,0.55);
+
+  /* ── Topbar ── */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;
+    padding:18px 36px;
+    display:flex;justify-content:space-between;align-items:center;
+    z-index:50;
   }
-  .brand .dot {
-    width: 4px; height: 4px; border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 6px var(--accent);
-    flex-shrink: 0;
+  .brand{display:flex;align-items:center;gap:9px;}
+  .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
+  .brand-intro{
+    font-family:var(--mono);font-size:8px;letter-spacing:0.32em;
+    text-transform:uppercase;color:var(--accent);opacity:0.8;
   }
-  .brand .introducing {
-    color: var(--accent);
-    font-size: 8.5px;
-    letter-spacing: 0.28em;
-    opacity: 0.85;
+  .brand-sep{font-family:var(--mono);font-size:8px;color:var(--line-strong);margin:0 2px;}
+  .brand-name{
+    font-family:var(--serif);font-size:13px;font-style:italic;
+    font-weight:400;color:var(--cream);letter-spacing:0.01em;
   }
-  .meta-right { display: flex; align-items: center; gap: 18px; }
+  .meta-right{
+    display:flex;align-items:center;gap:16px;
+    font-family:var(--mono);font-size:8px;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--cream-dim);opacity:0.6;
+  }
 
   /* ── Progress ── */
-  .progress {
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 1px;
-    background: rgba(242,237,227,0.05);
-    z-index: 60;
-  }
-  .progress-fill {
-    height: 100%; width: 0%;
-    background: linear-gradient(90deg, var(--accent-soft), var(--accent));
-    transition: width 0.55s cubic-bezier(0.7,0,0.2,1);
+  .progress{position:fixed;top:0;left:0;width:100%;height:1px;background:rgba(242,237,227,0.05);z-index:60;}
+  .progress-fill{
+    height:100%;width:0%;
+    background:linear-gradient(90deg,var(--accent-soft),var(--accent));
+    transition:width 0.6s cubic-bezier(0.7,0,0.2,1);
   }
 
   /* ── Screens ── */
-  .screens { position: relative; height: 100vh; width: 100%; }
-  .screen {
-    position: absolute; inset: 0;
-    display: none; align-items: center; justify-content: center;
-    padding: 88px 36px 76px;
-    overflow-y: auto;
+  .screens{position:relative;height:100vh;width:100%;}
+  .screen{
+    position:absolute;inset:0;display:none;
+    align-items:center;justify-content:center;
+    padding:88px 36px 76px;overflow-y:auto;
   }
-  .screen.active {
-    display: flex;
-    animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  .screen.active{display:flex;animation:rise 0.65s cubic-bezier(0.2,0.7,0.2,1);}
+  @keyframes rise{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    20%{transform:translateX(-7px);}
+    40%{transform:translateX(7px);}
+    60%{transform:translateX(-4px);}
+    80%{transform:translateX(4px);}
   }
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .panel { width: 100%; max-width: 580px; }
+  .panel{width:100%;max-width:660px;}
+  .panel.shake{animation:shake 0.38s ease;}
 
-  /* ── Type ── */
-  .qlabel {
-    font-family: var(--mono);
-    font-size: 9.5px; letter-spacing: 0.28em; text-transform: uppercase;
-    color: var(--accent); opacity: 0.75;
-    margin-bottom: 18px;
+  /* ── Typography ── */
+  .qlabel{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:9px;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--accent);opacity:0.65;
+    margin-bottom:22px;
   }
-  h1.title {
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: clamp(24px, 3.2vw, 40px);
-    line-height: 1.12; letter-spacing: -0.02em;
-    color: var(--cream); margin-bottom: 24px;
+  h1.title{
+    font-family:var(--serif);font-weight:400;
+    font-size:clamp(26px,3.8vw,44px);line-height:1.1;
+    letter-spacing:-0.02em;color:var(--cream);margin-bottom:26px;
   }
-  h1.title em { font-style: italic; color: var(--accent); }
-  p.subtitle {
-    font-size: 14px; line-height: 1.65;
-    color: var(--cream-dim); margin-bottom: 28px; font-weight: 300;
+  h1.title em{font-style:italic;color:var(--accent);font-weight:300;}
+  p.subtitle{
+    font-size:14px;line-height:1.65;color:var(--cream-dim);
+    max-width:480px;margin-bottom:32px;font-weight:300;
   }
 
-  /* ── Buttons ── */
-  .btn {
-    display: inline-flex; align-items: center; gap: 12px;
-    padding: 13px 22px;
-    background: var(--cream); color: var(--bg);
-    border: none; border-radius: 2px;
-    font-family: var(--sans); font-weight: 500; font-size: 13px;
-    letter-spacing: 0.03em; cursor: pointer;
-    transition: transform 0.25s cubic-bezier(0.2,0.8,0.2,1), background 0.25s;
+  /* ── Primary button ── */
+  .btn{
+    display:inline-flex;align-items:center;gap:11px;
+    padding:13px 22px;background:var(--cream);color:var(--bg);
+    border:none;border-radius:2px;font-family:var(--sans);
+    font-weight:500;font-size:13px;letter-spacing:0.04em;
+    cursor:pointer;transition:transform 0.3s cubic-bezier(0.2,0.8,0.2,1),background 0.25s;
   }
-  .btn:hover { background: var(--accent); transform: translateY(-2px); }
-  .btn .key {
-    font-family: var(--mono); font-size: 9px;
-    padding: 2px 5px; border: 1px solid rgba(14,14,12,0.2);
-    border-radius: 2px; opacity: 0.45;
-  }
-  .btn .arrow { transition: transform 0.25s; }
-  .btn:hover .arrow { transform: translateX(3px); }
+  .btn:hover{background:var(--accent);transform:translateY(-2px);}
+  .btn .key{font-family:var(--mono);font-size:9px;padding:2px 5px;border:1px solid rgba(14,14,12,0.2);border-radius:2px;opacity:0.45;}
+  .btn .arrow{transition:transform 0.25s;}
+  .btn:hover .arrow{transform:translateX(3px);}
 
-  .btn-skip {
-    display: inline-block; margin-top: 14px;
-    background: transparent; border: none;
-    font-family: var(--mono); font-size: 10px;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: rgba(242,237,227,0.35); cursor: pointer;
-    padding: 8px 0; transition: color 0.2s;
+  .skip-link{
+    display:inline-flex;align-items:center;
+    margin-left:18px;padding:0;background:none;border:none;
+    font-family:var(--mono);font-size:9px;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--cream-dim);cursor:pointer;
+    opacity:0.45;transition:opacity 0.2s;
   }
-  .btn-skip:hover { color: var(--cream-dim); }
+  .skip-link:hover{opacity:0.8;}
 
-  .hint {
-    font-family: var(--mono); font-size: 10px;
-    letter-spacing: 0.15em; text-transform: uppercase;
-    color: rgba(242,237,227,0.3); margin-top: 16px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .hint .kbd {
-    padding: 2px 6px; border: 1px solid var(--line-strong);
-    border-radius: 2px; font-size: 9px;
+  .hint{
+    margin-top:18px;font-family:var(--mono);font-size:9px;
+    letter-spacing:0.15em;text-transform:uppercase;
+    color:var(--cream-dim);opacity:0.45;
+    display:flex;align-items:center;gap:8px;
   }
 
   /* ── Options ── */
-  .options { display: flex; flex-direction: column; gap: 7px; margin-bottom: 24px; }
-  .opt {
-    display: flex; align-items: center; gap: 12px;
-    padding: 11px 14px;
-    background: transparent; border: 1px solid var(--line);
-    border-radius: 2px; cursor: pointer;
-    transition: all 0.18s ease;
-    color: rgba(242,237,227,0.6); font-size: 13.5px;
-    line-height: 1.4; text-align: left; width: 100%;
-    font-family: var(--sans); font-weight: 300;
+  .options{display:flex;flex-direction:column;gap:7px;margin-bottom:28px;max-width:520px;}
+  .opt{
+    display:flex;align-items:center;gap:13px;
+    padding:12px 15px;background:transparent;
+    border:1px solid var(--line);border-radius:2px;
+    cursor:pointer;transition:all 0.18s cubic-bezier(0.2,0.7,0.2,1);
+    color:var(--cream-dim);font-size:13px;line-height:1.4;
+    text-align:left;width:100%;font-family:var(--sans);font-weight:300;
   }
-  .opt:hover {
-    border-color: var(--line-strong);
-    background: rgba(242,237,227,0.02);
-    color: var(--cream); transform: translateX(3px);
+  .opt:hover{border-color:var(--line-strong);color:var(--cream);transform:translateX(3px);background:rgba(242,237,227,0.015);}
+  .opt.selected{border-color:var(--accent);background:rgba(201,154,87,0.07);color:var(--cream);}
+  .opt .letter{
+    width:20px;height:20px;border:1px solid var(--line-strong);border-radius:2px;
+    display:grid;place-items:center;font-family:var(--mono);font-size:8px;
+    color:var(--cream-dim);flex-shrink:0;transition:all 0.18s;
   }
-  .opt.selected {
-    border-color: rgba(201,154,87,0.6);
-    background: rgba(201,154,87,0.06);
-    color: var(--cream);
-  }
-  .opt .letter {
-    font-family: var(--mono); font-size: 9.5px;
-    color: rgba(242,237,227,0.3); flex-shrink: 0; width: 14px;
-    letter-spacing: 0;
-  }
-  .opt.selected .letter { color: var(--accent); }
-  .opt .checkmark {
-    margin-left: auto; opacity: 0;
-    color: var(--accent); font-size: 11px;
-    transition: opacity 0.2s;
-  }
-  .opt.selected .checkmark { opacity: 1; }
+  .opt.selected .letter{background:var(--accent);border-color:var(--accent);color:var(--bg);}
+  .opt .checkmark{margin-left:auto;opacity:0;color:var(--accent);font-size:11px;transition:opacity 0.18s;}
+  .opt.selected .checkmark{opacity:1;}
 
-  /* Mandatory shake + hint */
-  @keyframes shake {
-    0%,100% { transform: translateX(0); }
-    20%      { transform: translateX(-5px); }
-    40%      { transform: translateX(5px); }
-    60%      { transform: translateX(-3px); }
-    80%      { transform: translateX(3px); }
+  /* ── Inputs ── */
+  .input-block{margin-bottom:10px;}
+  .input-label{
+    display:block;font-family:var(--mono);font-size:8px;
+    letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--accent);opacity:0.6;margin-bottom:6px;
   }
-  .shake { animation: shake 0.38s ease; }
-  .val-hint {
-    font-family: var(--mono); font-size: 9.5px;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--accent); margin-top: -14px; margin-bottom: 16px;
-    opacity: 0; transition: opacity 0.25s; pointer-events: none;
+  .input-wrap{border-bottom:1px solid var(--line-strong);padding-bottom:8px;transition:border-color 0.25s;}
+  .input-wrap:focus-within{border-bottom-color:var(--accent);}
+  .input-wrap input{
+    width:100%;background:transparent;border:none;outline:none;
+    color:var(--cream);font-family:var(--serif);
+    font-size:clamp(18px,2.6vw,28px);font-weight:300;padding:5px 0;
   }
-  .val-hint.show { opacity: 0.7; }
-
-  /* ── Field inputs ── */
-  .field-wrap {
-    border-bottom: 1px solid var(--line-strong);
-    padding-bottom: 8px; margin-bottom: 18px;
-    transition: border-color 0.25s;
-  }
-  .field-wrap:focus-within { border-bottom-color: var(--accent); }
-  .field-wrap input {
-    width: 100%; background: transparent;
-    border: none; outline: none; color: var(--cream);
-    font-family: var(--serif);
-    font-size: clamp(18px, 2.4vw, 26px);
-    font-weight: 300; padding: 5px 0;
-  }
-  .field-wrap input::placeholder {
-    color: rgba(242,237,227,0.18); font-style: italic;
-  }
+  .input-wrap input::placeholder{color:rgba(242,237,227,0.18);font-style:italic;}
 
   /* ── Hype screen ── */
-  #hype {
+  #hype{
     background:
-      radial-gradient(900px 500px at 18% 28%, rgba(201,154,87,0.11), transparent 58%),
-      radial-gradient(600px 400px at 82% 78%, rgba(201,154,87,0.07), transparent 55%),
+      radial-gradient(1000px 500px at 15% 30%,rgba(201,154,87,0.1),transparent 60%),
+      radial-gradient(700px 400px at 85% 75%,rgba(140,107,61,0.07),transparent 60%),
       var(--bg);
   }
-  .hype-panel { text-align: center; max-width: 800px; }
-  .hype-title {
-    font-family: var(--serif); font-weight: 300; font-style: italic;
-    font-size: clamp(46px, 8.5vw, 104px);
-    line-height: 1.0; letter-spacing: -0.03em;
-    color: var(--cream); margin-bottom: 22px;
+  .hype-panel{text-align:center;max-width:820px;}
+  .hype-title{
+    font-family:var(--serif);font-weight:300;font-style:italic;
+    font-size:clamp(42px,8vw,96px);line-height:1.0;
+    letter-spacing:-0.03em;color:var(--cream);margin-bottom:18px;
   }
-  .hype-title .accent { color: var(--accent); }
-  .hype-question {
-    font-family: var(--sans); font-size: clamp(13px, 1.3vw, 15px);
-    color: var(--cream-dim); line-height: 1.75;
-    max-width: 460px; margin: 0 auto 36px; font-weight: 300;
+  .hype-title .accent{color:var(--accent);}
+  .hype-sub{
+    font-family:var(--sans);font-size:clamp(13px,1.3vw,15px);
+    color:var(--cream-dim);line-height:1.6;
+    max-width:400px;margin:0 auto 32px;font-weight:300;font-style:italic;
   }
-  .hype-question strong { color: var(--cream); font-weight: 400; }
-  .price-tag {
-    display: inline-flex; flex-direction: column; align-items: center; gap: 4px;
-    margin: 0 auto 36px; padding: 14px 28px;
-    border: 1px solid var(--line-strong); border-radius: 2px;
-    position: relative; background: rgba(0,0,0,0.28);
+  .price-tag{
+    display:inline-flex;flex-direction:column;align-items:center;gap:4px;
+    margin:0 auto 32px;padding:14px 26px;
+    border:1px solid var(--line-strong);border-radius:2px;
+    position:relative;background:rgba(0,0,0,0.2);
   }
-  .price-tag::before {
-    content: "MRP"; position: absolute; top: -7px; left: 50%;
-    transform: translateX(-50%); background: var(--bg);
-    padding: 0 8px; font-family: var(--mono);
-    font-size: 8px; letter-spacing: 0.25em; color: rgba(242,237,227,0.35);
+  .price-tag::before{
+    content:"MRP";position:absolute;top:-6px;left:50%;transform:translateX(-50%);
+    background:var(--bg);padding:0 7px;
+    font-family:var(--mono);font-size:7px;letter-spacing:0.3em;color:var(--cream-dim);
   }
-  .price-tag .strike {
-    font-family: var(--serif); font-size: 15px; color: var(--cream-dim);
-    text-decoration: line-through; text-decoration-color: var(--accent);
+  .price-tag .strike{
+    font-family:var(--serif);font-size:15px;color:var(--cream-dim);
+    text-decoration:line-through;text-decoration-color:var(--accent);
   }
-  .price-tag .label {
-    font-family: var(--mono); font-size: 8.5px;
-    letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); opacity: 0.8;
+  .price-tag .p-label{
+    font-family:var(--mono);font-size:8px;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--accent);
   }
-  .ticker {
-    position: absolute; bottom: 28px; left: 0; right: 0;
-    overflow: hidden; border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line); padding: 11px 0;
-    font-family: var(--mono); font-size: 9.5px;
-    letter-spacing: 0.22em; text-transform: uppercase;
-    color: rgba(242,237,227,0.3); white-space: nowrap;
+
+  /* Ticker */
+  .ticker{
+    position:absolute;bottom:28px;left:0;right:0;overflow:hidden;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:11px 0;font-family:var(--mono);font-size:9px;
+    letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--cream-dim);white-space:nowrap;opacity:0.45;
   }
-  .ticker-track { display: inline-flex; gap: 48px; animation: scroll 38s linear infinite; }
-  .ticker span::before { content: "✦"; color: var(--accent); margin-right: 48px; opacity: 0.6; }
-  @keyframes scroll {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
+  .ticker-track{display:inline-flex;gap:44px;animation:scroll 38s linear infinite;}
+  .ticker span::before{content:"✦";color:var(--accent);margin-right:44px;}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
   /* ── Welcome ── */
-  .welcome-title {
-    font-family: var(--serif); font-weight: 300;
-    font-size: clamp(34px, 5.2vw, 62px);
-    line-height: 1.06; letter-spacing: -0.02em; margin-bottom: 16px;
+  .welcome-title{
+    font-family:var(--serif);font-weight:300;
+    font-size:clamp(34px,5vw,60px);line-height:1.05;
+    letter-spacing:-0.02em;margin-bottom:18px;
   }
-  .welcome-title em { font-style: italic; color: var(--accent); }
-  .welcome-desc {
-    font-size: 15px; line-height: 1.65;
-    color: var(--cream-dim); margin-bottom: 36px; font-weight: 300;
+  .welcome-title em{font-style:italic;color:var(--accent);}
+  .welcome-sub{
+    font-size:14px;line-height:1.65;color:var(--cream-dim);
+    margin-bottom:36px;font-weight:300;font-style:italic;max-width:480px;
   }
 
-  /* ── Thank You ── */
-  #thanks {
+  /* ── Thank you ── */
+  #thanks{
     background:
-      radial-gradient(700px 500px at 50% 55%, rgba(201,154,87,0.14), transparent 60%),
-      radial-gradient(350px 250px at 85% 15%, rgba(201,154,87,0.08), transparent 50%),
-      radial-gradient(280px 280px at 8% 85%, rgba(140,107,61,0.09), transparent 50%),
-      radial-gradient(500px 400px at 30% 70%, rgba(201,154,87,0.05), transparent 55%),
+      radial-gradient(ellipse 1000px 800px at 50% 115%,rgba(201,154,87,0.2),transparent 65%),
+      radial-gradient(ellipse 500px 400px at 8% 55%,rgba(140,107,61,0.13),transparent 60%),
+      radial-gradient(ellipse 400px 300px at 92% 15%,rgba(201,154,87,0.09),transparent 60%),
       var(--bg);
   }
-  #thanks .panel { text-align: center; max-width: 580px; }
-  .seal {
-    width: 64px; height: 64px; border-radius: 50%;
-    border: 1px solid rgba(201,154,87,0.6);
-    display: grid; place-items: center;
-    margin: 0 auto 24px; position: relative;
+  /* decorative cashew blobs */
+  #thanks::after{
+    content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+    background-image:
+      radial-gradient(ellipse 120px 60px at 8% 20%,rgba(201,154,87,0.08),transparent),
+      radial-gradient(ellipse 80px 40px at 92% 30%,rgba(201,154,87,0.07),transparent),
+      radial-gradient(ellipse 100px 50px at 15% 80%,rgba(140,107,61,0.08),transparent),
+      radial-gradient(ellipse 90px 45px at 88% 75%,rgba(201,154,87,0.07),transparent);
   }
-  .seal::before {
-    content: ""; position: absolute; inset: -8px;
-    border-radius: 50%;
-    border: 1px dashed rgba(201,154,87,0.2);
-    animation: spin 22s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .seal svg { color: var(--accent); }
+  #thanks .panel{text-align:center;max-width:600px;position:relative;z-index:1;}
 
-  .receipt {
-    margin-top: 28px; padding: 18px 20px;
-    border: 1px solid var(--line); border-radius: 2px;
-    text-align: left; font-family: var(--mono); font-size: 10px;
-    color: rgba(242,237,227,0.45); letter-spacing: 0.08em;
-    background: rgba(0,0,0,0.22);
+  .seal{
+    width:72px;height:72px;border-radius:50%;
+    border:1px solid var(--accent);display:grid;place-items:center;
+    margin:0 auto 28px;position:relative;
   }
-  .receipt .row {
-    display: flex; justify-content: space-between;
-    padding: 6px 0; border-bottom: 1px dashed var(--line);
+  .seal::before{
+    content:"";position:absolute;inset:-8px;border-radius:50%;
+    border:1px dashed rgba(201,154,87,0.22);
+    animation:spin 22s linear infinite;
   }
-  .receipt .row:last-child { border-bottom: none; }
-  .receipt .row .val { color: var(--accent); }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .seal svg{color:var(--accent);}
+
+  .thanks-title{
+    font-family:var(--serif);font-weight:300;
+    font-size:clamp(32px,5vw,56px);line-height:1.05;
+    letter-spacing:-0.02em;margin-bottom:10px;
+  }
+  .thanks-title em{font-style:italic;color:var(--accent);}
+  .thanks-sub{
+    font-family:var(--mono);font-size:9px;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--cream-dim);opacity:0.55;margin-bottom:36px;
+  }
+
+  .receipt{
+    padding:18px 22px;border:1px solid var(--line);border-radius:2px;
+    text-align:left;font-family:var(--mono);font-size:9px;
+    color:var(--cream-dim);letter-spacing:0.08em;
+    background:rgba(0,0,0,0.18);margin-bottom:28px;
+  }
+  .receipt .row{
+    display:flex;justify-content:space-between;
+    padding:6px 0;border-bottom:1px dashed var(--line);
+  }
+  .receipt .row:last-child{border-bottom:none;}
+  .receipt .row .val{color:var(--accent);}
 
   /* LinkedIn */
-  .linkedin-section {
-    margin-top: 30px; padding-top: 24px;
-    border-top: 1px solid var(--line);
+  .linkedin-section{padding-top:20px;border-top:1px solid var(--line);}
+  .linkedin-label{
+    font-family:var(--mono);font-size:8px;letter-spacing:0.25em;
+    text-transform:uppercase;color:var(--cream-dim);opacity:0.45;
+    margin-bottom:14px;
   }
-  .linkedin-label {
-    font-family: var(--mono); font-size: 9.5px;
-    letter-spacing: 0.22em; text-transform: uppercase;
-    color: rgba(242,237,227,0.35); margin-bottom: 14px;
+  .linkedin-links{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+  .linkedin-icon-btn{
+    display:inline-grid;place-items:center;
+    width:38px;height:38px;
+    border:1px solid var(--line-strong);border-radius:2px;
+    background:rgba(0,0,0,0.15);color:var(--cream-dim);text-decoration:none;
+    transition:all 0.22s;
   }
-  .linkedin-links { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  .linkedin-link {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 9px 16px;
-    border: 1px solid var(--line-strong); border-radius: 2px;
-    color: var(--cream-dim); text-decoration: none;
-    font-family: var(--sans); font-size: 12.5px; font-weight: 400;
-    transition: all 0.22s; background: rgba(0,0,0,0.18);
-    letter-spacing: 0.01em;
+  .linkedin-icon-btn:hover{
+    border-color:var(--accent);color:#0A66C2;
+    background:rgba(201,154,87,0.07);transform:translateY(-2px);
   }
-  .linkedin-link:hover {
-    border-color: rgba(201,154,87,0.5); color: var(--cream);
-    background: rgba(201,154,87,0.07); transform: translateY(-2px);
-  }
-  .linkedin-link svg { width: 13px; height: 13px; flex-shrink: 0; opacity: 0.7; }
-  .linkedin-link:hover svg { opacity: 1; }
 
-  /* ── Nav ── */
-  .footer-nav {
-    position: fixed; bottom: 22px; right: 36px;
-    display: flex; gap: 6px; z-index: 40;
+  .thanks-footer{
+    margin-top:24px;font-family:var(--mono);font-size:9px;
+    letter-spacing:0.28em;color:var(--cream-dim);opacity:0.3;
   }
-  .nav-btn {
-    width: 32px; height: 32px;
-    border: 1px solid var(--line-strong); border-radius: 2px;
-    background: var(--bg-2); color: var(--cream);
-    display: grid; place-items: center;
-    cursor: pointer; transition: all 0.2s;
-  }
-  .nav-btn:hover:not(:disabled) {
-    border-color: var(--cream); background: var(--cream); color: var(--bg);
-  }
-  .nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
 
-  .step-count {
-    position: fixed; bottom: 26px; left: 36px;
-    font-family: var(--mono); font-size: 9.5px;
-    letter-spacing: 0.2em; color: rgba(242,237,227,0.3); z-index: 40;
+  /* ── Footer nav ── */
+  .footer-nav{position:fixed;bottom:22px;right:36px;display:flex;gap:5px;z-index:40;}
+  .nav-btn{
+    width:32px;height:32px;border:1px solid var(--line-strong);border-radius:2px;
+    background:var(--bg-2);color:var(--cream);display:grid;place-items:center;
+    cursor:pointer;transition:all 0.2s;
   }
-  .step-count .current { color: var(--accent); }
+  .nav-btn:hover:not(:disabled){border-color:var(--cream);background:var(--cream);color:var(--bg);}
+  .nav-btn:disabled{opacity:0.2;cursor:not-allowed;}
 
-  @media (max-width: 640px) {
-    .topbar { padding: 14px 20px; }
-    .meta-right > *:not(:last-child) { display: none; }
-    .screen { padding: 78px 20px 84px; }
-    .footer-nav { right: 20px; }
-    .step-count { left: 20px; }
-    .opt { padding: 10px 13px; font-size: 13px; }
-    .linkedin-links { flex-direction: column; align-items: stretch; }
+  .step-count{
+    position:fixed;bottom:26px;left:36px;
+    font-family:var(--mono);font-size:9px;letter-spacing:0.2em;
+    color:var(--cream-dim);opacity:0.45;z-index:40;
+  }
+  .step-count .current{color:var(--accent);opacity:1;}
+
+  @media(max-width:640px){
+    .topbar{padding:14px 20px;}
+    .meta-right>*:not(:last-child){display:none;}
+    .screen{padding:78px 20px 84px;}
+    .footer-nav{right:20px;}
+    .step-count{left:20px;}
+    .options{max-width:100%;}
+    .linkedin-links{flex-direction:column;align-items:stretch;}
   }
 </style>
 </head>
@@ -411,30 +354,28 @@
 <div class="topbar">
   <div class="brand">
     <span class="dot"></span>
-    <span class="introducing">Introducing</span>
-    The Cashew Project
+    <span class="brand-intro">Introducing</span>
+    <span class="brand-sep">·</span>
+    <span class="brand-name">The Cashew Project</span>
   </div>
   <div class="meta-right">
     <span>Odisha · 2026</span>
-    <span>Batch 001</span>
     <span id="timer">60s</span>
   </div>
 </div>
 
 <div class="screens" id="screens">
 
-  <!-- ══ HYPE ══ -->
+  <!-- ═══ HYPE ═══ -->
   <section class="screen active" id="hype" data-step="0">
     <div class="panel hype-panel">
       <h1 class="hype-title">
-        "Bhaiya, kaju <span class="accent">kitne</span><br>ka diya?"
+        "Bhaiya, kaju<br><span class="accent">kitne</span> ka diya?"
       </h1>
-      <p class="hype-question">
-        The question every Indian household has asked at a wedding, a Diwali tray, or a roadside dukaan. Here's the one we want answered — <strong>are cashews actually any good, or wildly underrated?</strong>
-      </p>
+      <p class="hype-sub">The question never changed. We think the answer should.</p>
       <div class="price-tag">
         <span class="strike">₹1,400 / kg</span>
-        <span class="label">Imported · Bleached · 4 months old</span>
+        <span class="p-label">Imported · Bleached · 4 months old</span>
       </div>
       <button class="btn" onclick="next()">
         Tell us what you think <span class="arrow">→</span>
@@ -448,110 +389,111 @@
     </div>
   </section>
 
-  <!-- ══ WELCOME ══ -->
+  <!-- ═══ WELCOME ═══ -->
   <section class="screen" id="welcome" data-step="1">
     <div class="panel">
-      <h1 class="welcome-title"><em>Re-engineering</em><br>the 4 PM snack.</h1>
-      <p class="welcome-desc">Most "healthy" snacks are dressed-up junk — help us build the honest alternative.</p>
-      <button class="btn" onclick="next()">
-        Start <span class="key">↵</span>
-      </button>
-      <div class="hint"><span class="kbd">60s</span> · 4 questions</div>
+      <h1 class="welcome-title">
+        Re-engineering<br>the <em>4 PM snack.</em>
+      </h1>
+      <p class="welcome-sub">We're fixing what "healthy" got wrong — and we need your honest take to get it right.</p>
+      <button class="btn" onclick="next()">Start <span class="key">↵</span></button>
+      <div class="hint">Takes about 60 seconds</div>
     </div>
   </section>
 
-  <!-- ══ Q1 ══ -->
+  <!-- ═══ Q1 ═══ -->
   <section class="screen" id="q1" data-step="2">
     <div class="panel">
-      <div class="qlabel">01 of 04</div>
-      <h1 class="title">Where do you usually pick up your dry fruits?</h1>
+      <div class="qlabel">01 / 04</div>
+      <h1 class="title">Where do you buy your healthy snacks?</h1>
       <div class="options" data-q="q1">
-        <button class="opt" data-val="instant"><span class="letter">A</span><span>Blinkit, Zepto, Instamart</span><span class="checkmark">✓</span></button>
-        <button class="opt" data-val="ecom"><span class="letter">B</span><span>Amazon, BigBasket</span><span class="checkmark">✓</span></button>
-        <button class="opt" data-val="d2c"><span class="letter">C</span><span>Premium D2C brands</span><span class="checkmark">✓</span></button>
-        <button class="opt" data-val="offline"><span class="letter">D</span><span>Local stores / supermarkets</span><span class="checkmark">✓</span></button>
-        <button class="opt" data-val="none"><span class="letter">E</span><span>I don't buy them regularly</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="instant"><span class="letter">A</span><span>Blinkit / Zepto / Instamart</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="ecom"><span class="letter">B</span><span>Amazon / BigBasket</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="d2c"><span class="letter">C</span><span>D2C brands, online</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="offline"><span class="letter">D</span><span>Local dry fruit store</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="none"><span class="letter">E</span><span>I don't, really</span><span class="checkmark">✓</span></button>
       </div>
-      <div class="val-hint" id="val-q1">Pick one to continue</div>
     </div>
   </section>
 
-  <!-- ══ Q2 ══ -->
+  <!-- ═══ Q2 ═══ -->
   <section class="screen" id="q2" data-step="3">
     <div class="panel">
-      <div class="qlabel">02 of 04</div>
-      <h1 class="title">Biggest frustration with healthy snacking at work?</h1>
+      <div class="qlabel">02 / 04</div>
+      <h1 class="title">Biggest frustration with snacking at work?</h1>
       <div class="options" data-q="q2">
-        <button class="opt" data-val="crash"><span class="letter">A</span><span>The 4 PM sugar crash from "healthy" bars</span><span class="checkmark">✓</span></button>
-        <button class="opt" data-val="hidden"><span class="letter">B</span><span>Hidden ingredients — palm oil, added sugar</span><span class="checkmark">✓</span></button>
-        <button class="opt" data-val="price"><span class="letter">C</span><span>Premium snacks feel overpriced</span><span class="checkmark">✓</span></button>
-        <button class="opt" data-val="portion"><span class="letter">D</span><span>No pre-portioned, grab-and-go format</span><span class="checkmark">✓</span></button>
-        <button class="opt" data-val="control"><span class="letter">E</span><span>I just eat whatever's in the cafeteria</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="crash"><span class="letter">A</span><span>The 4 PM sugar crash</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="hidden"><span class="letter">B</span><span>Hidden oils & preservatives</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="price"><span class="letter">C</span><span>Overpriced for what you get</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="portion"><span class="letter">D</span><span>No good portion sizes</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="control"><span class="letter">E</span><span>I eat whatever's there</span><span class="checkmark">✓</span></button>
       </div>
-      <div class="val-hint" id="val-q2">Pick one to continue</div>
     </div>
   </section>
 
-  <!-- ══ Q3 ══ -->
+  <!-- ═══ Q3 ═══ -->
   <section class="screen" id="q3" data-step="4">
     <div class="panel">
-      <div class="qlabel">03 of 04</div>
-      <h1 class="title">While buying cashews, what matters most?</h1>
+      <div class="qlabel">03 / 04</div>
+      <h1 class="title">While buying cashews, you look for —</h1>
       <div class="options" data-q="q3">
-        <button class="opt" data-val="grade"><span class="letter">A</span><span>Grade & freshness — whole kernels, recent harvest</span><span class="checkmark">✓</span></button>
-        <button class="opt" data-val="sourcing"><span class="letter">B</span><span>Clean sourcing — no chemicals, processed at origin</span><span class="checkmark">✓</span></button>
-        <button class="opt" data-val="format"><span class="letter">C</span><span>Portion format — ready-to-eat daily packs</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="grade"><span class="letter">A</span><span>Grade & crunch (W210, no breakage)</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="sourcing"><span class="letter">B</span><span>Clean sourcing, no chemicals</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="format"><span class="letter">C</span><span>Ready-to-eat daily portions</span><span class="checkmark">✓</span></button>
         <button class="opt" data-val="price"><span class="letter">D</span><span>Best price per kilo</span><span class="checkmark">✓</span></button>
       </div>
-      <div class="val-hint" id="val-q3">Pick one to continue</div>
     </div>
   </section>
 
-  <!-- ══ Q4 ══ -->
+  <!-- ═══ Q4 ═══ -->
   <section class="screen" id="q4" data-step="5">
     <div class="panel">
-      <div class="qlabel">04 of 04</div>
-      <h1 class="title">How would you want your kaju?</h1>
+      <div class="qlabel">04 / 04</div>
+      <h1 class="title">How do you want your kaju?</h1>
       <div class="options" data-q="q4">
-        <button class="opt" data-val="subscription"><span class="letter">A</span><span>Monthly desk supply — 30 daily 30g sachets</span><span class="checkmark">✓</span></button>
-        <button class="opt" data-val="trial"><span class="letter">B</span><span>7-day trial box — taste before committing</span><span class="checkmark">✓</span></button>
-        <button class="opt" data-val="bulk"><span class="letter">C</span><span>1 kg resealable pouch — stock the pantry</span><span class="checkmark">✓</span></button>
-        <button class="opt" data-val="adhoc"><span class="letter">D</span><span>Ad-hoc, from local stores</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="subscription"><span class="letter">A</span><span>30-day desk pack — 30g daily, oxygen-sealed</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="trial"><span class="letter">B</span><span>7-day taster box</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="bulk"><span class="letter">C</span><span>1 kg bulk pouch for home</span><span class="checkmark">✓</span></button>
+        <button class="opt" data-val="adhoc"><span class="letter">D</span><span>I'd rather pick it up locally</span><span class="checkmark">✓</span></button>
       </div>
-      <div class="val-hint" id="val-q4">Pick one to continue</div>
     </div>
   </section>
 
-  <!-- ══ CONTACT (optional) ══ -->
+  <!-- ═══ CONTACT (optional) ═══ -->
   <section class="screen" id="q5" data-step="6">
     <div class="panel">
-      <div class="qlabel">Early access</div>
-      <h1 class="title">Want in on our first batch from Odisha?</h1>
-      <p class="subtitle">We'll reach out when it's ready. No spam, ever.</p>
-      <div class="field-wrap">
-        <input type="email" id="emailInput" placeholder="your@email.com" autocomplete="email" />
+      <div class="qlabel">Early Access</div>
+      <h1 class="title">Early access, <em>yours.</em></h1>
+      <p class="subtitle">Leave your details to be first when Batch 001 ships. Entirely optional.</p>
+      <div class="input-block">
+        <label class="input-label">Email</label>
+        <div class="input-wrap">
+          <input type="email" id="emailInput" placeholder="your@email.com" autocomplete="email" />
+        </div>
       </div>
-      <div class="field-wrap">
-        <input type="tel" id="phoneInput" placeholder="+91 your number" autocomplete="tel" />
+      <div class="input-block" style="margin-bottom:30px;">
+        <label class="input-label">Phone</label>
+        <div class="input-wrap">
+          <input type="tel" id="phoneInput" placeholder="+91 xxxxxxxxxx" autocomplete="tel" />
+        </div>
       </div>
-      <button class="btn" onclick="submitForm(false)">
-        Lock in early access <span class="arrow">→</span>
-      </button>
-      <div><button class="btn-skip" onclick="submitForm(true)">Skip →</button></div>
+      <div style="display:flex;align-items:center;">
+        <button class="btn" onclick="submitForm()">Notify me <span class="arrow">→</span></button>
+        <button class="skip-link" onclick="skipContact()">skip for now →</button>
+      </div>
     </div>
   </section>
 
-  <!-- ══ THANK YOU ══ -->
+  <!-- ═══ THANK YOU ═══ -->
   <section class="screen" id="thanks" data-step="7">
     <div class="panel">
       <div class="seal">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-
-      <h1 class="welcome-title">Welcome to <em>the project.</em></h1>
-      <p class="welcome-desc">Your input shapes what we build. We'll be in touch when the first batch ships from Odisha.</p>
+      <h1 class="thanks-title">You're <em>in.</em></h1>
+      <p class="thanks-sub">Batch 001 · Odisha · Coming soon</p>
 
       <div class="receipt">
         <div class="row"><span>STATUS</span><span class="val">CONFIRMED</span></div>
@@ -562,29 +504,31 @@
       </div>
 
       <div class="linkedin-section">
-        <div class="linkedin-label">Connect with the founders</div>
+        <p class="linkedin-label">Connect with us</p>
         <div class="linkedin-links">
-          <a class="linkedin-link" href="https://www.linkedin.com/in/lakshya-tiwari?utm_source=CashewProject" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            Lakshya Tiwari
+          <a href="https://www.linkedin.com/in/lakshya-tiwari?utm_source=CashewProject" target="_blank" rel="noopener" class="linkedin-icon-btn" aria-label="Lakshya Tiwari on LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
           </a>
-          <a class="linkedin-link" href="https://www.linkedin.com/in/ladigoutam?utm_source=CashewProject" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            Ladi Goutam
+          <a href="https://www.linkedin.com/in/ladigoutam?utm_source=CashewProject" target="_blank" rel="noopener" class="linkedin-icon-btn" aria-label="Ladi Goutam on LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
           </a>
         </div>
       </div>
 
-      <div style="margin-top: 24px; font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.28em; color: rgba(242,237,227,0.25);">
-        ✦ &nbsp; THANK YOU &nbsp; ✦
-      </div>
+      <p class="thanks-footer">✦ &nbsp; THANK YOU &nbsp; ✦</p>
     </div>
   </section>
 
 </div>
 
 <div class="step-count">
-  <span class="current" id="stepCurrent">01</span>&nbsp;/&nbsp;<span id="stepTotal">08</span>
+  <span class="current" id="stepCurrent">01</span> &nbsp;/&nbsp; <span id="stepTotal">08</span>
 </div>
 
 <div class="footer-nav">
@@ -603,123 +547,113 @@
   const total = screens.length;
   let current = 0;
   const answers = {};
-  const mandatoryIds = ['q1', 'q2', 'q3', 'q4'];
+  const mandatoryIds = ['q1','q2','q3','q4'];
+
+  document.getElementById('stepTotal').textContent = String(total).padStart(2,'0');
 
   async function postToSheet(payload) {
     try {
       await fetch(SHEETS_ENDPOINT, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
+        method:'POST', mode:'no-cors',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body:JSON.stringify(payload)
       });
-      return { ok: true };
-    } catch (err) {
-      console.error('Submit failed:', err);
-      return { ok: false };
-    }
+    } catch(err) { console.error('Submit failed:',err); }
   }
 
-  document.getElementById('stepTotal').textContent = String(total).padStart(2, '0');
-
   function show(idx) {
-    screens.forEach((s, i) => s.classList.toggle('active', i === idx));
+    screens.forEach((s,i) => s.classList.toggle('active', i===idx));
     current = idx;
-    document.getElementById('stepCurrent').textContent = String(idx + 1).padStart(2, '0');
-    document.getElementById('progressFill').style.width = (idx / (total - 1) * 100) + '%';
-    document.getElementById('prevBtn').disabled = (idx === 0);
-    document.getElementById('nextBtn').disabled = (idx === total - 1);
-    if (screens[idx].id === 'q5') setTimeout(() => document.getElementById('emailInput').focus(), 350);
+    document.getElementById('stepCurrent').textContent = String(idx+1).padStart(2,'0');
+    document.getElementById('progressFill').style.width = (idx/(total-1)*100)+'%';
+    document.getElementById('prevBtn').disabled = (idx===0);
+    document.getElementById('nextBtn').disabled = (idx===total-1);
+    if(screens[idx].id==='q5') setTimeout(()=>document.getElementById('emailInput').focus(),380);
   }
 
   function next() {
-    const id = screens[current].id;
-    if (mandatoryIds.includes(id)) {
-      const selected = screens[current].querySelector('.opt.selected');
-      if (!selected) {
-        const optsEl = screens[current].querySelector('.options');
-        const hint = document.getElementById('val-' + id);
-        optsEl.classList.add('shake');
-        if (hint) hint.classList.add('show');
-        setTimeout(() => {
-          optsEl.classList.remove('shake');
-          if (hint) setTimeout(() => hint.classList.remove('show'), 1800);
-        }, 380);
+    const s = screens[current];
+    if(mandatoryIds.includes(s.id)) {
+      const grp = s.querySelector('.options');
+      if(!answers[grp.dataset.q]) {
+        const p = s.querySelector('.panel');
+        p.classList.remove('shake');
+        void p.offsetWidth;
+        p.classList.add('shake');
+        setTimeout(()=>p.classList.remove('shake'),400);
         return;
       }
     }
-    if (current < total - 1) show(current + 1);
+    if(current < total-1) show(current+1);
   }
+  function prev() { if(current>0) show(current-1); }
 
-  function prev() { if (current > 0) show(current - 1); }
+  async function submitForm() {
+    const email = document.getElementById('emailInput').value.trim();
+    const phone = document.getElementById('phoneInput').value.trim();
+    const btn = document.querySelector('#q5 .btn');
+    const orig = btn.innerHTML;
 
-  async function submitForm(skip) {
-    const email = skip ? '' : document.getElementById('emailInput').value.trim();
-    const phone = skip ? '' : document.getElementById('phoneInput').value.trim();
-    const submitBtn = document.querySelector('#q5 .btn');
-    const originalLabel = submitBtn.innerHTML;
-
-    if (!skip && email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      document.getElementById('emailInput').style.color = '#E27D60';
+    if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      document.getElementById('emailInput').style.color='#E27D60';
       document.getElementById('emailInput').focus();
       return;
     }
 
     answers.email = email;
     answers.phone = phone;
+    const display = email || phone || 'ANONYMOUS';
+    document.getElementById('receiptEmail').textContent = display.toUpperCase().substring(0,28);
 
-    const label = email || phone || 'ANONYMOUS';
-    document.getElementById('receiptEmail').textContent =
-      (label.length > 26 ? label.slice(0, 24) + '…' : label).toUpperCase();
+    btn.disabled=true; btn.style.opacity='0.5';
+    btn.innerHTML='Filing… <span class="arrow">◌</span>';
 
-    submitBtn.disabled = true;
-    submitBtn.style.opacity = '0.55';
-    submitBtn.innerHTML = 'Sealing… <span class="arrow">◌</span>';
+    await postToSheet({...answers, secret:'easier'});
 
-    await postToSheet({ ...answers, secret: 'easier' });
-
-    submitBtn.disabled = false;
-    submitBtn.style.opacity = '1';
-    submitBtn.innerHTML = originalLabel;
-
-    show(current + 1);
+    btn.disabled=false; btn.style.opacity='1'; btn.innerHTML=orig;
+    show(current+1);
   }
 
-  // Option click + auto-advance
-  document.querySelectorAll('.options').forEach(group => {
-    const qKey = group.dataset.q;
-    group.querySelectorAll('.opt').forEach(opt => {
-      opt.addEventListener('click', () => {
-        group.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  function skipContact() {
+    answers.email=''; answers.phone='';
+    document.getElementById('receiptEmail').textContent='ANONYMOUS';
+    postToSheet({...answers, secret:'easier'});
+    show(current+1);
+  }
+
+  // Option selection
+  document.querySelectorAll('.options').forEach(grp => {
+    const qKey = grp.dataset.q;
+    grp.querySelectorAll('.opt').forEach(opt => {
+      opt.addEventListener('click',()=>{
+        grp.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
         opt.classList.add('selected');
         answers[qKey] = opt.dataset.val;
-        const hint = document.getElementById('val-' + qKey);
-        if (hint) hint.classList.remove('show');
-        setTimeout(next, 360);
+        setTimeout(next,360);
       });
     });
   });
 
   // Keyboard
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      if (screens[current].id === 'q5') submitForm(false);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){
+      if(screens[current].id==='q5') submitForm();
       else next();
-    } else if (e.key === 'ArrowRight') next();
-    else if (e.key === 'ArrowLeft') prev();
-    else if (/^[a-eA-E]$/.test(e.key)) {
+    } else if(e.key==='ArrowRight') next();
+    else if(e.key==='ArrowLeft') prev();
+    else if(/^[a-eA-E]$/.test(e.key)){
       const opts = screens[current].querySelectorAll('.opt');
-      const idx = e.key.toLowerCase().charCodeAt(0) - 97;
-      if (opts[idx]) opts[idx].click();
+      const idx = e.key.toLowerCase().charCodeAt(0)-97;
+      if(opts[idx]) opts[idx].click();
     }
   });
 
   // Countdown
-  let t = 60;
-  const tEl = document.getElementById('timer');
-  setInterval(() => {
-    if (current > 0 && current < total - 1 && t > 0) { t--; tEl.textContent = t + 's'; }
-  }, 1000);
+  let t=60;
+  const tEl=document.getElementById('timer');
+  setInterval(()=>{
+    if(current>0&&current<total-1&&t>0){t--;tEl.textContent=t+'s';}
+  },1000);
 </script>
 </body>
 </html>
