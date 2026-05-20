@@ -63,7 +63,7 @@ function doPost(e) {
 
     const timestamp = new Date().toISOString();
 
-    sheet.appendRow([timestamp, email, phone, q1, q2, q3, q4]);
+    sheet.appendRow([timestamp, email, q1, q2, q3, q4, phone]);
 
     // 7. Email notification ------------------------------------
     sendNotification(timestamp, email, phone, q1, q2, q3, q4);
