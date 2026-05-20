@@ -3,7 +3,7 @@
 // ============================================================
 const SHEET_ID    = '1e4JSfAw4BG7Ru8FvsGoqHHz4nE88cP1jz53UhLYEDlc'; // ← your sheet
 const SHEET_NAME  = 'Sheet1';                // tab name shown at the bottom of the sheet
-const SECRET_KEY  = 'cashew2024secret';      // must match the "secret" field in your HTML
+const SECRET_KEY  = 'easier';               // must match the "secret" field in your HTML
 const NOTIFY_EMAIL = 'lakshya.tiwari1201@gmail.com'; // notification recipient
 
 // Rate-limiting: max submissions accepted from one IP per hour
