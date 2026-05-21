@@ -10,29 +10,43 @@ const NOTIFY_EMAIL = 'lakshya.tiwari1201@gmail.com'; // notification recipient
 const MAX_PER_HOUR = 5;
 
 // ============================================================
-//  MAIN ENTRY POINT
+//  MAIN ENTRY POINTS
 // ============================================================
-function doGet() {
-  return ContentService
-    .createTextOutput('The Cashew Project survey endpoint is live. Submissions accepted via POST only.')
-    .setMimeType(ContentService.MimeType.TEXT);
+
+// GET handler — receives survey submissions via URL params (avoids POST redirect issue)
+function doGet(e) {
+  if (!e || !e.parameter || !e.parameter.secret) {
+    return ContentService
+      .createTextOutput('The Cashew Project survey endpoint is live.')
+      .setMimeType(ContentService.MimeType.TEXT);
+  }
+  return handleSubmission(e.parameter);
 }
 
+// POST handler kept as fallback
 function doPost(e) {
   try {
-    // 1. Parse the body ----------------------------------------
     if (!e || !e.postData || !e.postData.contents) {
       return jsonResponse({ success: false, error: 'No data received' });
     }
+    return handleSubmission(JSON.parse(e.postData.contents));
+  } catch (err) {
+    console.error('doPost error:', err.toString());
+    return jsonResponse({ success: false, error: 'Server error. Please try again.' });
+  }
+}
 
-    const data = JSON.parse(e.postData.contents);
-
-    // 2. Validate shared secret --------------------------------
+// ============================================================
+//  CORE HANDLER
+// ============================================================
+function handleSubmission(data) {
+  try {
+    // 1. Validate shared secret --------------------------------
     if (data.secret !== SECRET_KEY) {
       return jsonResponse({ success: false, error: 'Unauthorized' });
     }
 
-    // 3. Sanitize inputs ---------------------------------------
+    // 2. Sanitize inputs ---------------------------------------
     const email = sanitize(data.email || '');
     const phone = sanitize(data.phone || '');
     const q1    = sanitize(data.q1    || '');
@@ -40,38 +54,38 @@ function doPost(e) {
     const q3    = sanitize(data.q3    || '');
     const q4    = sanitize(data.q4    || '');
 
-    if (!email || !isValidEmail(email)) {
+    // Email is optional — only validate format if one was provided
+    if (email && !isValidEmail(email)) {
       return jsonResponse({ success: false, error: 'Invalid email' });
     }
 
-    // 4. Rate limiting -----------------------------------------
-    const ip = (e.parameter && e.parameter.userIp) ? e.parameter.userIp : 'unknown';
-    if (!checkRateLimit(ip)) {
+    // 3. Rate limiting — skip for unknown IPs to avoid blocking everyone
+    const ip = data.userIp || null;
+    if (ip && !checkRateLimit(ip)) {
       return jsonResponse({ success: false, error: 'Too many submissions. Try again later.' });
     }
 
-    // 5. Spam filter -------------------------------------------
+    // 4. Spam filter -------------------------------------------
     if (isSpam(email, q1, q2, q3, q4)) {
       // Silently accept without writing — spammers shouldn't know they're blocked
       return jsonResponse({ success: true });
     }
 
-    // 6. Write to Sheet ----------------------------------------
+    // 5. Write to Sheet ----------------------------------------
     const sheet = SpreadsheetApp
       .openById(SHEET_ID)
       .getSheetByName(SHEET_NAME);
 
     const timestamp = new Date().toISOString();
+    sheet.appendRow([timestamp, email || '(anonymous)', q1, q2, q3, q4, phone]);
 
-    sheet.appendRow([timestamp, email, q1, q2, q3, q4, phone]);
-
-    // 7. Email notification ------------------------------------
+    // 6. Email notification ------------------------------------
     sendNotification(timestamp, email, phone, q1, q2, q3, q4);
 
     return jsonResponse({ success: true });
 
   } catch (err) {
-    console.error('doPost error:', err.toString());
+    console.error('handleSubmission error:', err.toString());
     return jsonResponse({ success: false, error: 'Server error. Please try again.' });
   }
 }
@@ -127,6 +141,8 @@ function checkRateLimit(ip) {
 
 // ============================================================
 //  EMAIL NOTIFICATION
+//  Uses MailApp (auto-authorized) instead of GmailApp which
+//  requires a separate OAuth scope grant.
 // ============================================================
 
 function sendNotification(timestamp, email, phone, q1, q2, q3, q4) {
@@ -145,7 +161,7 @@ function sendNotification(timestamp, email, phone, q1, q2, q3, q4) {
       'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/edit'
     ].join('\n');
 
-    GmailApp.sendEmail(NOTIFY_EMAIL, subject, body);
+    MailApp.sendEmail(NOTIFY_EMAIL, subject, body);
   } catch (err) {
     // Don't let a notification failure break the submission
     console.error('Email notification failed:', err.toString());
