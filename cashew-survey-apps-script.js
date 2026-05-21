@@ -145,6 +145,26 @@ function checkRateLimit(ip) {
 //  requires a separate OAuth scope grant.
 // ============================================================
 
+// ============================================================
+//  DIAGNOSTIC — run this once from the Apps Script editor
+//  to authorize scopes and confirm sheet + email both work.
+// ============================================================
+function runTest() {
+  const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
+
+  // Add header row if sheet is empty
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(['Timestamp', 'Email', 'Q1 Channel', 'Q2 Frustration', 'Q3 Driver', 'Q4 Format', 'Phone']);
+  }
+
+  const ts = new Date().toISOString();
+  sheet.appendRow([ts, 'test@setup.com', 'instant', 'crash', 'grade', 'subscription', '']);
+
+  MailApp.sendEmail(NOTIFY_EMAIL, '🥜 Cashew Project — setup test', 'Sheet write and email both working. Timestamp: ' + ts);
+
+  Logger.log('✅ Test row written and email sent to ' + NOTIFY_EMAIL);
+}
+
 function sendNotification(timestamp, email, phone, q1, q2, q3, q4) {
   try {
     const subject = '🥜 New Cashew Project Survey Response';

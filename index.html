@@ -558,7 +558,7 @@
 </div>
 
 <script>
-  const SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwxS38S0LzwtVVOn7mqaEFK1pdisThoaa2AmxogBErlRWBCx8mmSvoc39-cN2169aMj/exec';
+  const SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwJ4e7N3M5ZKSSOO3LnX9vbKc-U86K-9Tqy9IXW5ZBZ7GWYwRzwQRmJ3hzPNDjyPQHi/exec';
 
   const screens = document.querySelectorAll('.screen');
   const total = screens.length;
@@ -568,15 +568,11 @@
 
   document.getElementById('stepTotal').textContent = String(total).padStart(2,'0');
 
-  async function postToSheet(payload) {
-    try {
-      const params = new URLSearchParams(
-        Object.fromEntries(Object.entries(payload).map(([k,v]) => [k, v ?? '']))
-      );
-      await fetch(SHEETS_ENDPOINT + '?' + params.toString(), {
-        method: 'GET', mode: 'no-cors'
-      });
-    } catch(err) { console.error('Submit failed:',err); }
+  function postToSheet(payload) {
+    const params = new URLSearchParams(
+      Object.fromEntries(Object.entries(payload).map(([k,v]) => [k, v ?? '']))
+    );
+    new Image().src = SHEETS_ENDPOINT + '?' + params.toString();
   }
 
   function show(idx) {
@@ -626,7 +622,7 @@
     btn.disabled=true; btn.style.opacity='0.5';
     btn.innerHTML='Filing… <span class="arrow">◌</span>';
 
-    await postToSheet({...answers, secret:'easier'});
+    postToSheet({...answers, secret:'easier'});
 
     btn.disabled=false; btn.style.opacity='1'; btn.innerHTML=orig;
     show(current+1);
