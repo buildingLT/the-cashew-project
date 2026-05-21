@@ -558,7 +558,15 @@
 </div>
 
 <script>
-  const SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwJ4e7N3M5ZKSSOO3LnX9vbKc-U86K-9Tqy9IXW5ZBZ7GWYwRzwQRmJ3hzPNDjyPQHi/exec';
+  const FORM_ENDPOINT = 'https://docs.google.com/forms/d/e/1FAIpQLSejfFUpk47q6db1HmnMds3MCancFnwwTQrPsA8siRmeIlTEEA/formResponse';
+  const FORM_FIELDS = {
+    q1:    'entry.951125124',
+    q2:    'entry.320311304',
+    q3:    'entry.831058756',
+    q4:    'entry.840023689',
+    email: 'entry.206574378',
+    phone: 'entry.1301942142'
+  };
 
   const screens = document.querySelectorAll('.screen');
   const total = screens.length;
@@ -569,10 +577,12 @@
   document.getElementById('stepTotal').textContent = String(total).padStart(2,'0');
 
   function postToSheet(payload) {
-    const params = new URLSearchParams(
-      Object.fromEntries(Object.entries(payload).map(([k,v]) => [k, v ?? '']))
-    );
-    new Image().src = SHEETS_ENDPOINT + '?' + params.toString();
+    const formData = new FormData();
+    Object.entries(FORM_FIELDS).forEach(([key, entryId]) => {
+      formData.append(entryId, payload[key] ?? '');
+    });
+    fetch(FORM_ENDPOINT, { method: 'POST', mode: 'no-cors', body: formData })
+      .catch(err => console.error('Submit failed:', err));
   }
 
   function show(idx) {
@@ -622,7 +632,7 @@
     btn.disabled=true; btn.style.opacity='0.5';
     btn.innerHTML='Filing… <span class="arrow">◌</span>';
 
-    postToSheet({...answers, secret:'easier'});
+    postToSheet(answers);
 
     btn.disabled=false; btn.style.opacity='1'; btn.innerHTML=orig;
     show(current+1);
@@ -631,7 +641,7 @@
   function skipContact() {
     answers.email=''; answers.phone='';
     document.getElementById('receiptEmail').textContent='ANONYMOUS';
-    postToSheet({...answers, secret:'easier'});
+    postToSheet(answers);
     show(current+1);
   }
 
